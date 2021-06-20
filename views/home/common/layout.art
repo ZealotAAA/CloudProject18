@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Note details</title>
+	<link rel="stylesheet" href="/home/css/base.css">
+	<link rel="stylesheet" href="/home/css/menu.css">
+	<link rel="stylesheet" href="/home/css/list.css">
+    {{block 'link'}}{{/block}}
+</head>
+<body>
+    {{block 'main'}}{{/block}}
+
+</body>
+	<script src="/home/js/jquery-3.5.0.js"></script>
+	<script src="/home/js/list.js"></script>
+	{{block 'script'}}{{/block}}
+</html>

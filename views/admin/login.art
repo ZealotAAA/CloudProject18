@@ -1,0 +1,47 @@
+{{extend './common/layout.art'}}
+    {{block 'main'}}
+    <div class="login-body">
+        <div class="login-container">
+            <h4 class="title">Note manager login</h4>
+            <div class="login">
+                <form action="/admin/login" method="post" id="loginForm">
+                    <div class="form-group">
+                        <label>email</label>
+                        <input name="email" type="email" class="form-control" placeholder="Plase enter email address">
+                    </div>
+                    <div class="form-group">
+                        <label>passsword</label>
+                        <input name="password" type="password" class="form-control" placeholder="Plase enter passsword">
+                    </div>
+                    <button type="submit" class="btn btn-primary">login</button>
+                </form>
+            </div>
+            <div class="tips"></div>
+        </div>
+    </div>
+
+    {{/block}}
+   {{block 'script'}}
+    <script type="text/javascript">
+        // Add a submit event to the form
+        $('#loginForm').on('submit', function () {
+            // Get the content entered by the user of the form
+            var result = serializeToJSON($(this));
+            // console.log(result);
+            
+            // If the user did not enter the email address
+            if (result.email.trim().length == 0 ) {
+                alert('Plase enter email address');
+                return false;
+            }
+
+            // If the user did not enter the password
+            if (result.password.trim().length == 0) {
+                // Prevent the program from executing downwards
+                alert('Plase enter passsword');
+                return false;
+            }
+        });
+
+    </script>
+    {{/block}}

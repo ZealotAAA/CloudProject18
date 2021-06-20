@@ -1,0 +1,205 @@
+{{extend './common/layout.art'}}
+
+{{block 'main'}}
+    {{include './common/header.art'}}
+    <!-- Main content -->
+    <div class="content">
+        {{include './common/aside.art'}}
+        <div class="main">
+            <!-- Category title -->
+            <div class="title">
+                <h4 style="display: {{button == 'change' ? 'inline' : 'none'}}">{{@article && article.title}}</h4>
+                {{if message}}
+                <p class="tips">{{message}}</p>
+                {{/if message}}
+
+            </div>
+            <!-- /Category title -->
+            <form class="form-container" action="{{link}}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input onchange='getSelectData(this.id, "title-list")' name="title" type="text" class="form-control" placeholder="Please enter note title" value="{{article && article.title}}" list="title-list" id="title">
+                    <datalist id="title-list"></datalist>
+                </div>
+                <div class="form-group">
+                    <label>Author</label>
+                    <input name="author" type="text" class="form-control" readonly value="{{@userInfo._id || article && article.author}}">
+                </div>
+                <div class="form-group">
+                    <label>Upload date</label>
+                    <input name="publishDate" type="date" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <label>classification</label>
+                    <input onchange='getSelectData(this.id, "sorts-list")' name="sorts" type="text" class="form-control" placeholder="输入分类" list="sorts-list" id="sorts" value="{{article && article.sorts}}">
+                    <datalist id="sorts-list"></datalist>
+                </div>
+                
+                <div class="form-group">
+                   <label for="exampleInputFile">Note cover</label>
+                   <input name="cover" type="file" id="file">
+                   <div class="thumbnail-waper">
+                       <img class="img-thumbnail" src="{{article && article.cover}}" id="preview">
+                   </div>
+                </div>
+                {{if article && article.title}}
+                
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea name="content" class="form-control" id="editor">{{article.content}}</textarea>
+                    
+                </div>
+                <div class="buttons">
+                    <input type="submit" class="btn btn-primary" value="{{button}}">
+                </div>
+                {{else}}
+
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea name="content" class="form-control" id="editor"></textarea>
+                </div>
+                <div class="buttons">
+                    <input type="submit" class="btn btn-primary" value="{{button}}">
+                </div>
+                {{/if}}
+            </form>
+            
+        </div>
+    </div>
+    <!-- /Main content -->
+{{/block}}
+
+{{block 'script'}}
+    <script src="/admin/lib/ckeditor5/ckeditor.js">
+    </script>
+
+    <script type="text/javascript">
+        // let editor = CKEDITOR.replace( 'content', {
+        //     ckfinder: {
+        //         uploadUrl: '/public/uploads/content'
+        //     }
+        // });
+        // editor.getData('content');
+
+
+        let editor;
+
+        ClassicEditor
+                .create( document.querySelector('#editor'), {
+                    language: 'zh-cn',
+                    ckfinder: {
+                        uploadUrl: '/public/uploads/content'
+                    },
+                    image: {
+                        
+                        toolbar: ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight', 'imageStyle:side', 'imageStyle:alignCenter'],
+
+                        styles: [
+                            'full',
+                            'alignLeft',
+                            'alignRight',
+                            'side',
+                            'alignCenter'
+                        ],
+                    },
+                    ImageResize: {
+                        resizeUnit: 'px'
+                    }
+                })
+                .then(newEditor => {
+                    editor = newEditor;
+                })
+                .catch( error => {
+                    console.error( error );
+                });
+
+        // get data
+        // const editorData = editor.getData('content');
+
+
+        // Select file to upload
+        var file = document.querySelector('#file');
+        var preview = document.querySelector('#preview');
+        file.onchange = function () {
+            var reader = new FileReader();
+            reader.readAsDataURL(this.files[0]);
+
+            reader.onload = function () {
+                // console.log(reader.result);
+                preview.src = reader.result;
+            }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function getSelectData (id, listid) {
+            var xmlhttp;
+            let sendData = document.getElementById(id).value;
+            let url = "/admin/ajax";
+            if( window.XMLHttpRequest ){
+                //IE7+
+                xmlhttp = new XMLHttpRequest();
+            }else {
+                //IE5,IE6
+                xmlhttp = new ActiveXObject( "Microsoft.XMLHTTP" );
+            }
+
+
+            //Send data；
+            xmlhttp.open( "POST", url, true );
+            // xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            
+            xmlhttp.setRequestHeader("Content-type","application/json");
+            let da = JSON.stringify({
+                head: id,
+                data: sendData
+            });
+            // console.log('da',da);
+            // console.log(JSON.parse(da).head);
+            xmlhttp.send(da);
+	
+            //Send, return data；
+            xmlhttp.onreadystatechange = function() {
+                if ( xmlhttp.readyState == 4 && xmlhttp.status == 200 ){
+                    
+                    let resdata = JSON.parse(xmlhttp.responseText);
+                    // console.log(JSON.parse(resdata));
+                    // console.log(resdata);
+                    // console.log('json[1]', resdata[0]);
+                    // console.log('json', resdata[1].title);
+                    // // console.log('json1', JSON.parse(resdata[1]).title)
+                    // console.log('datatest', JSON.parse(resdata)[1])
+			        
+                    // resdata.forEach((item) => {
+                    //     let op = document.createElement('option');
+                    //     if (listid === 'title-list') op.setAttribute('value', item.title);
+                    //     op.setAttribute('value', item.sorts);
+                    //     document.getElementById(listid).appendChild(op);
+                    // });
+                    let count = document.getElementById(listid).childElementCount;
+                    console.log(count);
+                    if( count != 0){
+                        let idNode = document.getElementById(listid);
+                        let first = idNode.firstElementChild;
+                        while(first) {                       
+                            first.remove();
+                            first = idNode.firstElementChild;
+                        }
+
+                    }
+
+                    for(let i = 0; i < resdata.length; i++) {
+                        let op = document.createElement('option');
+                        op.setAttribute('class', 'listClass');
+                        if (listid === 'title-list') op.setAttribute('value', resdata[i]);
+                        op.setAttribute('value', resdata[i]);
+                        document.getElementById(listid).appendChild(op);
+                    }
+			
+		        }
+	        }
+	
+            }
+    </script>
+{{/block}}

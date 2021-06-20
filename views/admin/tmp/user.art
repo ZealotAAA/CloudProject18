@@ -1,0 +1,19 @@
+                {{each users}}
+                    <tr>
+                        <td>{{@$value._id}}</td>
+                        <td>{{$value.username}}</td>
+                        <td>{{$value.email}}</td>
+                        {{if $value.role && $value.root == 0}}
+                            <td>{{$value.role == 'root' ? 'Super admin' : ''}}</td>
+                        {{else if $value.role && $value.root == 1}}
+                            <td>{{$value.role == 'admin' ? 'administrator' : 'normal user'}}</td>
+                        {{/if}}
+                        <td>{{$value.state == '0' ? 'Start' : 'banned'}}</td>
+                        {{if $value.role == 'normal' && $value.root == 1}}
+                        <td>
+                            <a href="/admin/user-edit?id={{@$value._id}}" class="glyphicon glyphicon-edit"></a>
+                            <i class="glyphicon glyphicon-remove delete" data-toggle="modal" data-target=".confirm-modal" data-id="{{@$value._id}}"></i>
+                        </td>
+                        {{/if}}
+                    </tr>
+                {{/each}}
