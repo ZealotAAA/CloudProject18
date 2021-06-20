@@ -1,0 +1,33 @@
+<!-- Sidebar -->
+<div class="aside fl">
+    <ul class="menu list-unstyled">
+        <li>
+            <a class="item {{currentLink == 'user' ? 'active' : ''}}" href="/admin/user">
+                <span class="glyphicon glyphicon-user"></span>
+                User management
+            </a>
+        </li>
+        <li>
+            <a class="item {{currentLink == 'article' ? 'active' : ''}}" href="/admin/article">
+                <span class="glyphicon glyphicon-th-list"></span>
+                note management
+            </a>
+        </li>
+        <li>
+            <a class="item" href="/home">
+                <span class="glyphicon glyphicon-th-list"></span>
+                Main page
+            </a>
+        </li>
+        <li>
+            <a class="item" href="/admin/logout">
+                <span class="glyphicon glyphicon-user"></span>
+                Exit
+            </a>
+        </li>
+    </ul>
+    <div class="cprt">
+        Powered by <a href="http://www.moxixii.com" target="_blank">MoXi</a>
+    </div>
+</div>
+<!-- Sidebar -->

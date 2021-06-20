@@ -1,0 +1,35 @@
+{
+  "name": "production-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development node app.js",
+	  "start": "cross-env NODE_ENV=production node app.js",
+	  "test": "cross-env NODE_ENV=test node app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ckeditor/ckeditor5-image": "^19.0.1",
+    "@ckeditor/ckeditor5-upload": "^19.0.1",
+    "art-template": "^4.13.2",
+    "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "config": "^3.3.1",
+    "dateformat": "^3.0.3",
+    "express": "^4.17.1",
+    "express-art-template": "^1.0.1",
+    "express-session": "^1.17.1",
+    "formidable": "^1.2.2",
+    "joi": "^14.3.1",
+    "mongoose": "^5.9.18",
+    "mongoose-sex-page": "^1.2.4",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}

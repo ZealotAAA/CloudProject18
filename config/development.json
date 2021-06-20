@@ -1,0 +1,12 @@
+{
+    "title": "Note management system ---- development environment",
+    "host": "127.0.0.1",
+	"port": 81,
+    "db": {
+        "user": "fwx",
+        "pwd": "fwx5618177",
+        "host": "localhost",
+        "port": "27017",
+        "name": "blog"
+    }
+}

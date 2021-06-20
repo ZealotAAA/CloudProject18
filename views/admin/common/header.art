@@ -1,0 +1,23 @@
+<!-- header -->
+<div class="header">
+    <!-- Web signal -->
+    <div class="logo fl">
+        <i>Backstage management page</i>
+    </div>
+    <!-- /Web signal -->
+    <!-- User information -->
+    <div class="info">
+        <div class="profile dropdown fr">
+            <span class="btn dropdown-toggle" data-toggle="dropdown">
+                {{userInfo && userInfo.username}}
+                <span class="caret"></span>
+            </span>
+            <ul class="dropdown-menu">
+                <li><a href="/admin/user-edit?id={{@userInfo._id}}">Personal information</a></li>
+                <li><a href="/admin/logout">logout</a></li>
+            </ul>
+        </div>
+    </div>
+    <!-- /User information -->
+</div>
+<!-- /header -->
